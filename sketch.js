@@ -2,9 +2,10 @@ var dog,sadDog,happyDog, database;
 var foodS,foodStock;
 var addFood;
 var foodObj;
-
+var lastFedTime;
 //create feed and lastFed variable here
  var feed, lastFed;
+ var time=12;
 
 function preload(){
 sadDog=loadImage("Dog.png");
@@ -51,10 +52,23 @@ function draw() {
 
   }else{
 
-    foodObj.updateFoodStock(food_stack_val -1);
+    foodObj.updateFoodStock(food_stock_val -1);
   }
  
   //write code to display text lastFed time here
+
+  if(lastFedTime<=12){
+text("last fed time is" + lastFedTime+"am",350,30);
+
+  }
+  else if(lastFedTime===0){
+text("last fed time is:12a.m",350,30);
+
+  }else{
+
+text("last fed time is"+ lastFedTime-time+"p.m.",350,30);
+
+  }
   
  
   drawSprites();
@@ -87,3 +101,21 @@ function addFoods(){
 }
 
 
+async function getCurentTime(){
+    
+  var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+  var responseJSON = await response.json();
+
+  var datetime = responseJSON.datetime;
+  lastFedTime = datetime.slice(11,13);
+  
+  //if(hour>=0600 && hour<=1900){
+     // bg = "sprites/bg1.png";
+//  }
+  //else{
+    //  bg = "sprites/bg2.jpg";
+  //}
+
+ // backgroundImg = loadImage(bg);
+  //console.log(backgroundImg);
+}
